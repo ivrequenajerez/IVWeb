@@ -1,0 +1,129 @@
+.menu {
+    --s: 24px; /* Controla el tamaño del elemento */
+    --c: white; /* Define el color */
+    
+    /* Estilos básicos del elemento */
+    height: var(--s);
+    aspect-ratio: 1;
+    border: none;
+    padding: 0;
+    border-inline: calc(var(--s)/2) solid #0000; /* Borde invisible */
+    box-sizing: content-box;
+
+    /* Gradientes para crear el diseño del botón */
+    --_g1: linear-gradient(var(--c) 20%, #0000 0 80%, var(--c) 0) no-repeat content-box border-box;
+    --_g2: radial-gradient(circle closest-side at 50% 12.5%, var(--c) 95%, #0000) repeat-y content-box border-box;
+
+    /* Configuración del fondo con los gradientes */
+    background:
+        var(--_g2) left var(--_p, 0px) top,
+        var(--_g1) left calc(var(--s)/10 + var(--_p, 0px)) top,
+        var(--_g2) right var(--_p, 0px) top,
+        var(--_g1) right calc(var(--s)/10 + var(--_p, 0px)) top;
+    
+    /* Tamaño de fondo y posición */
+    background-size:
+        20% 80%,
+        40% 100%;
+
+    /* Configuración adicional */
+    position: relative;
+    clip-path: inset(0 25%);
+    -webkit-mask: linear-gradient(90deg, #0000, #000 25% 75%, #0000);
+    cursor: pointer;
+    transition:
+        background-position .3s var(--_s, .3s),
+        clip-path 0s var(--_s, .6s);
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+.menu:before,
+.menu:after {
+    content: "";
+    position: absolute;
+    border-radius: var(--s); /* Define el radio de borde */
+    inset: 40% 0; /* Posiciona el elemento en relación con su contenedor */
+    background: var(--c); /* Color de fondo */
+    transition: transform .3s calc(.3s - var(--_s, .3s)); /* Transición en la transformación con retraso */
+}
+
+.menu:checked {
+    clip-path: inset(0); /* Al hacer clic, elimina el área recortada */
+    --_p: calc(-1*var(--s)); /* Mueve el elemento hacia arriba */
+    --_s: 0s; /* Establece el tiempo de transición a 0 segundos */
+}
+
+.menu:checked:before {
+    transform: rotate(45deg); /* Rotación en sentido horario */
+}
+
+.menu:checked:after {
+    transform: rotate(-45deg); /* Rotación en sentido antihorario */
+}
+
+.menu:focus-visible {
+    clip-path: none; /* Elimina el área recortada al enfocar */
+    -webkit-mask: none; /* Elimina la máscara */
+    border: none; /* Elimina el borde */
+    outline: 2px solid var(--c); /* Añade un contorno alrededor del elemento enfocado */
+    outline-offset: 5px; /* Establece el desplazamiento del contorno */
+}
+
+.contenedor-menu {
+    opacity: 0;
+    visibility: hidden;
+    position: fixed;
+    top: 22%;
+    left: 60%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border: 2px solid #000;
+    z-index: 2;
+    transition: opacity 0.5s ease, visibility 0.5s ease; /* Transición para el desvanecimiento */
+}
+
+.contenedor-menu.mostrar {
+    opacity: 1;
+    visibility: visible;
+    z-index: 999;
+}
+
+.contenedor-menu ul {
+    padding: 0;
+}
+
+.contenedor-menu li {
+    list-style: none;
+    line-height: 25px;
+}
+
+.menu:checked ~ #contenedorMenu {
+    display: block;
+    opacity: 1;
+    visibility: visible;
+    animation: fadeIn 0.5s ease; /* Agregamos una animación de desvanecimiento */
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        visibility: hidden;
+    }
+    to {
+        opacity: 1;
+        visibility: visible;
+    }
+}
+
+/* Responsive */
+@media only screen and (max-width: 600px) { /* Cambia el ancho máximo según tus necesidades */
+    input {
+        display: none;
+    }
+    .contenedor-menu {
+        display: none; /* Oculta el contenedor del menú */
+    }
+}
+

@@ -1,0 +1,21 @@
+.contenedor-footer {
+    display: flex;
+    align-items: center;
+    height: 200px;
+    width: 100%;
+    background-color: black;
+
+}
+
+.columna-izquierda-f {
+    width: 8.3%;
+}
+
+.columna-derecha-f {
+    width: 33.3%;
+}
+
+.columna-centro-f {
+    color: white;
+    width: 33.3%;
+}
